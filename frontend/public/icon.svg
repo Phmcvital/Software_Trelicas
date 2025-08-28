@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Solução de Treliças — Ícone</title>
+  <desc id="desc">Ícone com uma treliça estilizada dentro de um quadrado arredondado.</desc>
+  <defs>
+    <style>
+      :root{
+        --bg:#F3EBE1;       /* fundo do app */
+        --accent:#5C4033;   /* cor dos perfis da treliça */
+        --stroke:#3B2F2F;   /* cor dos nós */
+      }
+      .card{fill:var(--bg);}
+      .beam{stroke:var(--accent); stroke-width:10; fill:none; stroke-linecap:round; stroke-linejoin:round;}
+      .node{fill:var(--stroke); stroke:var(--accent); stroke-width:6;}
+    </style>
+  </defs>
+
+  <!-- fundo -->
+  <rect x="8" y="8" width="240" height="240" rx="32" class="card"/>
+
+  <!-- base da treliça -->
+  <path class="beam" d="M40 192 H216"/>
+
+  <!-- montantes e diagonais (treliça tipo Pratt simplificada) -->
+  <path class="beam" d="M40 192 L72 112 L104 192 L136 112 L168 192 L200 112"/>
+  <path class="beam" d="M40 192 L104 192 L168 192 L216 192"/>
+  <path class="beam" d="M72 112 L136 112 L200 112"/>
+
+  <!-- diagonais -->
+  <path class="beam" d="M40 192 L72 112 M104 192 L72 112 M104 192 L136 112 M168 192 L136 112 M168 192 L200 112 M216 192 L200 112"/>
+
+  <!-- nós -->
+  <circle class="node" cx="40" cy="192" r="7"/>
+  <circle class="node" cx="72" cy="112" r="7"/>
+  <circle class="node" cx="104" cy="192" r="7"/>
+  <circle class="node" cx="136" cy="112" r="7"/>
+  <circle class="node" cx="168" cy="192" r="7"/>
+  <circle class="node" cx="200" cy="112" r="7"/>
+  <circle class="node" cx="216" cy="192" r="7"/>
+</svg>
