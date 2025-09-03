@@ -1,0 +1,25 @@
+# Compilados Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ambiente virtual
+venv/
+.env/
+.venv/
+env/
+ENV/
+
+# Configurações do VS Code
+.vscode/
+
+# Arquivos temporários / logs
+*.log
+*.tmp
+
+# Arquivos compactados
+*.zip
+
+# Arquivos do sistema (Windows / macOS)
+Thumbs.db
+.DS_Store
