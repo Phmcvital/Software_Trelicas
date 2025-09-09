@@ -1,7 +1,5 @@
-
-
-import './App.css';
-import UploaderTrelica from './components/uploaderTrelica';
+import UploaderTrelica from './components/uploaderTrelica'
+import './index.css'
 
 function App() {
   return (
