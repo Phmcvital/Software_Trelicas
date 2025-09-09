@@ -1,1 +1,0 @@
-# lê o arquivo e converte para os tipos de dados certos

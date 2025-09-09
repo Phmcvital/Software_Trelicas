@@ -1,4 +1,7 @@
+
 import { useState } from "react";
+import ResultDisplay from './ResultDisplay';
+import TrussVisualizer from './TrussVisualizer.jsx';
 
 const UploaderTrelica = () => {
   const [jsonData, setJsonData] = useState(null);
@@ -16,8 +19,12 @@ const UploaderTrelica = () => {
       try {
         const parsedData = parseTrelica(content);
         setJsonData(parsedData);
+        setResult(null); 
+        setError(null);
       } catch (error) {
-        alert(error.message);
+        setError(error.message);
+        setJsonData(null);
+        setResult(null);
       }
     };
     reader.readAsText(file);
@@ -26,11 +33,10 @@ const UploaderTrelica = () => {
   const parseTrelica = (content) => {
     const lines = content.split('\n').filter(line => line.trim() !== '');
     if (lines.length < 4) {
-      throw new Error('Erro no arquivo');
+      throw new Error('Formato de arquivo inválido ou incompleto.');
     }
 
-    const [numNos, numElementos] = lines[0].split(';').map(val => parseInt(val.trim()));
-
+    const [numNos] = lines[0].split(';').map(val => parseInt(val.trim()));
     const nos = [];
     for (let i = 1; i <= numNos; i++) {
       const parts = lines[i].split(';').map(val => val.trim());
@@ -80,15 +86,14 @@ const UploaderTrelica = () => {
         }
       }
     }
-
     return { nos, barras };
   };
 
   const sendToBackend = async () => {
     if (!jsonData) return;
-
     setLoading(true);
     setError(null);
+    setResult(null);
 
     try {
       const response = await fetch('http://localhost:8000/calcular', {
@@ -98,11 +103,12 @@ const UploaderTrelica = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`Erro no servidor: ${response.status}`);
+        const errorData = await response.json();
+        throw new Error(errorData.detail || `Erro no servidor: ${response.status}`);
       }
 
-      const result = await response.json();
-      setResult(result);
+      const resultData = await response.json();
+      setResult({ resultados: resultData });
     } catch (error) {
       setError(`Erro ao enviar dados: ${error.message}`);
     } finally {
@@ -161,10 +167,10 @@ const UploaderTrelica = () => {
       )}
 
       {result && (
-        <div className="result-section">
-          <h2>Resultados</h2>
-          <pre>{JSON.stringify(result, null, 2)}</pre>
-        </div>
+        <>
+          <TrussVisualizer initialData={jsonData} results={result} />
+          <ResultDisplay result={result} />
+        </>
       )}
     </div>
   );

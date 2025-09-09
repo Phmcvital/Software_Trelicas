@@ -1,20 +1,23 @@
-import Header from './components/header.jsx'
-import UploaderTrelica from './components/uploaderTrelica.jsx'
+// frontend/src/App.jsx
 
-const App = () => {
+import './App.css';
+import UploaderTrelica from './components/uploaderTrelica';
 
+function App() {
   return (
-    
-    <div className="app">
-      <Header className="app-header"/>
-
-      <p>Faça o upload do arquivo de especificação da treliça</p>
-
+    <div className="App">
+      <header className="App-header">
+        <h1>Software para Análise de Treliças</h1>
+        <p>Faça o upload de um arquivo .txt para calcular e visualizar os resultados</p>
+      </header>
       <main>
         <UploaderTrelica />
       </main>
+      <footer className="App-footer">
+        <p>Grupo: Pedro Henrique Martins da Costa Vital, ...</p>
+      </footer>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

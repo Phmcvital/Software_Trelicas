@@ -22,7 +22,7 @@ h3 {
 }
 
 body {
-    width: 600px;
+    width: 900px;
     margin: 0 auto;
     padding: 0 20px 20px 20px;
     border: 5px solid black;
@@ -80,4 +80,59 @@ button:active {
   background-color: #532b18;
   transform: scale(0.97);
   box-shadow: 1px 2px 0px black;
+}
+
+
+.result-section {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.result-table-container {
+  margin-bottom: 2rem;
+}
+
+.result-table-container h3 {
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.result-table-container p {
+  font-size: 0.9em;
+  color: #666;
+  margin-top: 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+thead th {
+  background-color: #007bff;
+  color: white;
+  text-align: center;
+}
+
+tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+tbody tr:hover {
+  background-color: #e2e2e2;
+}
+
+td {
+  text-align: center;
 }
