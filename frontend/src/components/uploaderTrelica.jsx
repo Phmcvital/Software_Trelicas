@@ -97,15 +97,20 @@ const UploaderTrelica = () => {
 
     try {
       const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-      const response = await fetch(`${apiUrl}/calcular`, { ... });
+      const response = await fetch(`${apiUrl}/calcular`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(jsonData)
+      });
+
+      const data = await response.json();
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.detail || `Erro no servidor: ${response.status}`);
+        throw new Error(data.detail || `Erro no servidor: ${response.status}`);
       }
+      
+      setResult({ resultados: data });
 
-      const resultData = await response.json();
-      setResult({ resultados: resultData });
     } catch (error) {
       setError(`Erro ao enviar dados: ${error.message}`);
     } finally {
