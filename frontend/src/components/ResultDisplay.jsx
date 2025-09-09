@@ -1,24 +1,24 @@
-// frontend/src/components/ResultDisplay.jsx
+
 
 import React from 'react';
 
 const ResultDisplay = ({ result }) => {
-  // Se não houver resultados, não renderiza nada
+  
   if (!result) {
     return null;
   }
 
-  // Extrai os dados do objeto de resultado para facilitar o uso
+  
   const { deslocamentos, reacoes, esforcos_por_barra } = result.resultados;
 
-  // Função para formatar números com casas decimais
+  
   const formatNumber = (num, decimals) => Number(num).toFixed(decimals);
 
   return (
     <div className="result-section">
       <h2>Resultados do Cálculo</h2>
 
-      {/* Tabela de Deslocamentos Nodais */}
+      {}
       <div className="result-table-container">
         <h3>Deslocamentos Nodais</h3>
         <p>Valores em milímetros (mm)</p>
@@ -34,7 +34,7 @@ const ResultDisplay = ({ result }) => {
             {Object.entries(deslocamentos).map(([noId, u]) => (
               <tr key={noId}>
                 <td>{noId}</td>
-                {/* Multiplicamos por 1000 para converter de metros para milímetros */}
+                {}
                 <td>{formatNumber(u.Ux * 1000, 4)}</td>
                 <td>{formatNumber(u.Uy * 1000, 4)}</td>
               </tr>
@@ -43,7 +43,7 @@ const ResultDisplay = ({ result }) => {
         </table>
       </div>
 
-      {/* Tabela de Reações nos Apoios */}
+      {}
       <div className="result-table-container">
         <h3>Reações nos Apoios</h3>
         <p>Valores em Newtons (N)</p>
@@ -73,7 +73,7 @@ const ResultDisplay = ({ result }) => {
         </table>
       </div>
 
-      {/* Tabela de Esforços nas Barras */}
+      {}
       <div className="result-table-container">
         <h3>Esforços Axiais nas Barras</h3>
         <p>Valores em Newtons (N)</p>

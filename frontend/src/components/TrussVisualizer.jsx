@@ -1,4 +1,4 @@
-// frontend/src/components/TrussVisualizer.jsx
+
 
 import React, { useMemo } from 'react'
 
@@ -26,7 +26,7 @@ const TrussVisualizer = ({ initialData, results }) => {
     const trussWidth = maxX - minX;
     const trussHeight = maxY - minY;
 
-    // Garante que não dividimos por zero se a treliça for um ponto ou linha
+    
     const effectiveTrussWidth = trussWidth > 0 ? trussWidth : 1;
     const effectiveTrussHeight = trussHeight > 0 ? trussHeight : 1;
 
@@ -34,19 +34,19 @@ const TrussVisualizer = ({ initialData, results }) => {
     const scaleY = (SVG_HEIGHT - 2 * PADDING) / effectiveTrussHeight;
     const scale = Math.min(scaleX, scaleY);
 
-    // Calcula os deslocamentos para centralizar e ajustar o eixo Y
+    
     const scaledTrussWidth = trussWidth * scale;
     const scaledTrussHeight = trussHeight * scale;
 
     const offsetX = PADDING + (SVG_WIDTH - 2 * PADDING - scaledTrussWidth) / 2 - (minX * scale);
-    const offsetY = PADDING + (SVG_HEIGHT - 2 * PADDING - scaledTrussHeight) / 2 + (minY * scale); // Ajuste principal aqui
+    const offsetY = PADDING + (SVG_HEIGHT - 2 * PADDING - scaledTrussHeight) / 2 + (minY * scale); 
 
     const nosMap = {};
     nos.forEach(no => {
       nosMap[no.id] = {
         id: no.id,
         x: no.x * scale + offsetX,
-        // Inverte o eixo Y para que o Y positivo seja para cima no desenho SVG
+        
         y: SVG_HEIGHT - (no.y * scale + offsetY),
         apoio: no.apoio
       };

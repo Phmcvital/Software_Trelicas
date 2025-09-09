@@ -1,4 +1,4 @@
-// frontend/src/App.jsx
+
 
 import './App.css';
 import UploaderTrelica from './components/uploaderTrelica';
@@ -14,7 +14,7 @@ function App() {
         <UploaderTrelica />
       </main>
       <footer className="App-footer">
-        <p>Grupo: Pedro Henrique Martins da Costa Vital, ...</p>
+        <p>Grupo: RODRIGO DE OLIVEIRA PAZ, PEDRO HENRIQUE MARTINS DA COSTA VITAL, KAIKY RODRIGUES DE CASTRO, EDUARDO RODRIGUES MELO e FRANCISCO IVAN PONTES DO NASCIMENTO JUNIOR
       </footer>
     </div>
   );

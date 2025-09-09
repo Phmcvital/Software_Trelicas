@@ -1,7 +1,7 @@
-# -*- coding: utf-8 -*-
-# Ponto de entrada simples para rodar o solver pela linha de comando
-# Ex.: python main.py Exemplo/exemplo.txt
-# backend/main.py
+
+
+
+
 
 import uvicorn
 from fastapi import FastAPI, HTTPException
@@ -55,7 +55,7 @@ async def calcular_trelica(payload: TrelicaPayload):
         
         trelica = criar_trelica_de_dados(dados_dict)
         
-        # 2. Resolve a treliça
+        
         trelica.resolver()
         
         esforcos_por_barra = {}
