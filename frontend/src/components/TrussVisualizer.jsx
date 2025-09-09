@@ -102,9 +102,9 @@ const TrussVisualizer = ({ initialData, results }) => {
         ))}
       </svg>
       <div className="legend">
-        <div><span style={{ backgroundColor: 'blue' }}></span> Tração</div>
-        <div><span style={{ backgroundColor: 'red' }}></span> Compressão</div>
-        <div><span style={{ backgroundColor: '#888888' }}></span> Esforço Nulo/Não Calculado</div>
+        <div><span style={{ backgroundColor: 'blue' }}></span> Tração: azul</div>
+        <div><span style={{ backgroundColor: 'red' }}></span> Compressão: vermelho</div>
+        <div><span style={{ backgroundColor: '#888888' }}></span> Esforço Nulo/Não Calculado: cinza</div>
       </div>
     </div>
   );
