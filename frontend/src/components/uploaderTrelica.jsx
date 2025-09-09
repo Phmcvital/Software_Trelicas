@@ -96,11 +96,8 @@ const UploaderTrelica = () => {
     setResult(null);
 
     try {
-      const response = await fetch('http:
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(jsonData)
-      });
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      const response = await fetch(`${apiUrl}/calcular`, { ... });
 
       if (!response.ok) {
         const errorData = await response.json();
