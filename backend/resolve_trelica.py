@@ -15,7 +15,7 @@ Sa√≠da:
 - Fun√ß√£o resolver_trelica(path) retorna um dicion√°rio (JSON-ready) com:
     deslocamentos: {no_id: {Ux, Uy}}
     reacoes: {no_id: {Rx, Ry}}   (apenas n√≥s com apoio)
-    esforcos_por_barra: {barra_id: {no_i, no_j, Nx, Ny, N_orientado}}
+    esforcos_por_barra: {barra_id: {no_i, no_j, N_orientado, tensao, deformacao}}
 - Al√©m disso, ao executar diretamente, imprime um JSON e uma vers√£o textual formatada com ';' (compat√≠vel com o exemplo do enunciado).
 """
 import io
@@ -28,11 +28,9 @@ import sys
 from model import No, Barra, Trelica
 
 
-# FunÁ„o respons·vel por  split
 def _split(line: str) -> List[str]:
     return [p.strip() for p in line.split(";")]
 
-# FunÁ„o respons·vel por criar trelica de dados
 def criar_trelica_de_dados(dados: dict) -> Trelica:
     """Cria e retorna um objeto Trelica a partir de um dicion√°rio de dados."""
     
@@ -81,7 +79,6 @@ def criar_trelica_de_dados(dados: dict) -> Trelica:
         
     return trelica
 
-# FunÁ„o respons·vel por carregar entrada
 def carregar_entrada(path: str) -> Trelica:
     """
     Carrega arquivo e monta o objeto Trelica.
@@ -170,7 +167,6 @@ def carregar_entrada(path: str) -> Trelica:
 
     return t
 
-# FunÁ„o respons·vel por carregar entrada from stream
 def carregar_entrada_from_stream(stream: io.StringIO) -> Trelica:
     """
     Carrega os dados de um stream de texto (vindo de um upload) e monta o objeto Trelica.
@@ -243,7 +239,6 @@ def carregar_entrada_from_stream(stream: io.StringIO) -> Trelica:
     return t
 
 
-# FunÁ„o respons·vel por resolver trelica from stream
 def resolver_trelica_from_stream(stream: io.StringIO) -> dict:
     """
     Resolve a treli√ßa lida de um stream de texto.
@@ -254,15 +249,14 @@ def resolver_trelica_from_stream(stream: io.StringIO) -> dict:
     esforcos_por_barra = {}
     for barra in t.barras:
         N = t._N[barra.id]
-        c, s = barra.cos_sin()
-        Nx = N * c
-        Ny = N * s
+        tensao = t._tensoes[barra.id]
+        deformacao = t._deformacoes[barra.id]
         esforcos_por_barra[barra.id] = {
             "no_i": barra.no_i.id,
             "no_j": barra.no_j.id,
-            "Nx": float(Nx),
-            "Ny": float(Ny),
-            "N_orientado": float(N)
+            "N_orientado": float(N),
+            "tensao": float(tensao),
+            "deformacao": float(deformacao)
         }
 
     resultados = {
@@ -279,14 +273,13 @@ def resolver_trelica_from_stream(stream: io.StringIO) -> dict:
 
     return resultados
 
-# FunÁ„o respons·vel por resolver trelica
 def resolver_trelica(path: str) -> dict:
     """
     Resolve a treli√ßa lida do arquivo path.
     Retorna um dicion√°rio JSON-ready com:
       - deslocamentos
       - reacoes
-      - esforcos_por_barra (Nx, Ny, N_orientado)
+      - esforcos_por_barra (N_orientado, tensao, deformacao)
     """
     t = carregar_entrada(path)
     t.resolver()
@@ -294,16 +287,15 @@ def resolver_trelica(path: str) -> dict:
     
     esforcos_por_barra = {}
     for barra in t.barras:
-        N = t._N[barra.id]  
-        c, s = barra.cos_sin()
-        Nx = N * c
-        Ny = N * s
+        N = t._N[barra.id]
+        tensao = t._tensoes[barra.id]
+        deformacao = t._deformacoes[barra.id]
         esforcos_por_barra[barra.id] = {
             "no_i": barra.no_i.id,
             "no_j": barra.no_j.id,
-            "Nx": float(Nx),
-            "Ny": float(Ny),
-            "N_orientado": float(N)
+            "N_orientado": float(N),
+            "tensao": float(tensao),
+            "deformacao": float(deformacao)
         }
 
     resultados = {
@@ -321,14 +313,13 @@ def resolver_trelica(path: str) -> dict:
     return resultados
 
 
-# FunÁ„o respons·vel por imprimir saida formatada
 def imprimir_saida_formatada(resultados: dict):
     """
     Produz uma sa√≠da textual parecida com o exemplo do enunciado,
     usando ponto decimal e ';' como separador, cada linha terminando sem texto extra.
     Estrutura:
       - Primeiro bloco: rea√ß√µes por n√≥ (ordenado pelos n√≥s na entrada). Para n√≥s sem apoio, imprime 0.0; 0.0
-      - Segundo bloco: esfor√ßos por barra (para cada barra, imprime Nx; Ny; N_orientado)
+      - Segundo bloco: esfor√ßos por barra (para cada barra, imprime N_orientado; tensao; deformacao)
     """
     
     
@@ -353,7 +344,7 @@ def imprimir_saida_formatada(resultados: dict):
     for barra_id in sorted(esforcos.keys()):
         e = esforcos[barra_id]
         
-        print(f"{e['Nx']:.1f}; {e['Ny']:.1f}; {e['N_orientado']:.1f}")
+        print(f"{e['N_orientado']:.1f}; {e['tensao']:.3e}; {e['deformacao']:.3e}")
 
     print("\n=== Fim da sa√≠da formatada ===\n")
 

@@ -1,8 +1,3 @@
-
-
-
-
-
 import uvicorn
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -61,11 +56,14 @@ async def calcular_trelica(payload: TrelicaPayload):
         esforcos_por_barra = {}
         for barra in trelica.barras:
             N = trelica._N[barra.id]
-            c, s = barra.cos_sin()
+            tensao = trelica._tensoes[barra.id]
+            deformacao = trelica._deformacoes[barra.id]
             esforcos_por_barra[barra.id] = {
                 "no_i": barra.no_i.id,
                 "no_j": barra.no_j.id,
-                "N_orientado": float(N)
+                "N_orientado": float(N),
+                "tensao": float(tensao),
+                "deformacao": float(deformacao)
             }
 
         resultados = {

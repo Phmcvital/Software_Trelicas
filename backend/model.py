@@ -49,6 +49,13 @@ class Barra:
             [-c*c, -c*s,  c*c,  c*s],
             [-c*s, -s*s,  c*s,  s*s]
         ])
+    def tensao(self, N: float) -> float:
+        # Calcula a tensão na barra (Força/Área)
+        return N / self.A
+
+    def deformacao(self, tensao: float) -> float:
+        # Calcula a deformação na barra (Tensão/Módulo de Young)
+        return tensao / self.E
 
 class Trelica:
 # Função responsável por   init  
@@ -112,7 +119,6 @@ class Trelica:
         dofs = np.arange(K.shape[0])
         livres = np.array([d for d in dofs if d not in fixos], dtype=int)
 
-        
         KLL = K[np.ix_(livres, livres)]
         FL  = F[livres]
 
@@ -120,20 +126,19 @@ class Trelica:
         if len(livres) > 0:
             U[livres] = np.linalg.solve(KLL, FL)
 
-        
         for i,no in enumerate(self.nos):
             no.Ux = float(U[2*i])
             no.Uy = float(U[2*i+1])
 
-        
         R = K @ U - F
         self._reacoes: Dict[str,Tuple[float,float]] = {}
         for i,no in enumerate(self.nos):
             if (2*i in fixos) or (2*i+1 in fixos):
                 self._reacoes[no.id] = (float(R[2*i]), float(R[2*i+1]))
 
-        
         self._N: Dict[int, float] = {}
+        self._tensoes: Dict[int, float] = {}
+        self._deformacoes: Dict[int, float] = {}
         for barra in self.barras:
             i = self._map[barra.no_i.id]
             j = self._map[barra.no_j.id]
@@ -143,8 +148,12 @@ class Trelica:
             k = barra.E*barra.A/L
             
             axial = k * ( (ue[2]-ue[0])*c + (ue[3]-ue[1])*s )
-            
+            tensao = barra.tensao(axial)
+            deformacao = barra.deformacao(tensao)
+
             self._N[barra.id] = float(axial)
+            self._tensoes[barra.id] = float(tensao)
+            self._deformacoes[barra.id] = float(deformacao)
 
 # Função responsável por deslocamentos
     def deslocamentos(self) -> Dict[str,Tuple[float,float]]:
@@ -157,3 +166,9 @@ class Trelica:
 # Função responsável por esforcos axiais
     def esforcos_axiais(self) -> Dict[int, float]:
         return self._N
+# Função responsável por tensoes
+    def tensoes(self) -> Dict[int, float]:
+        return self._tensoes
+# Função responsável por deformacoes
+    def deformacoes(self) -> Dict[int, float]:
+        return self._deformacoes

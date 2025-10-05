@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 
 const ResultDisplay = ({ result }) => {
@@ -13,6 +11,7 @@ const ResultDisplay = ({ result }) => {
 
   
   const formatNumber = (num, decimals) => Number(num).toFixed(decimals);
+  const formatScientific = (num) => Number(num).toExponential(4);
 
   return (
     <div className="result-section">
@@ -75,8 +74,8 @@ const ResultDisplay = ({ result }) => {
 
       {}
       <div className="result-table-container">
-        <h3>Esforços Axiais nas Barras</h3>
-        <p>Valores em Newtons (N)</p>
+        <h3>Esforços e Tensões nas Barras</h3>
+        <p>Força em Newtons (N), Tensão em Pascal (Pa)</p>
         <table>
           <thead>
             <tr>
@@ -84,6 +83,8 @@ const ResultDisplay = ({ result }) => {
               <th>Nós</th>
               <th>Força Axial</th>
               <th>Tipo</th>
+              <th>Tensão (Pa)</th>
+              <th>Deformação</th>
             </tr>
           </thead>
           <tbody>
@@ -97,6 +98,8 @@ const ResultDisplay = ({ result }) => {
                   <td style={{ color: ehTracao ? 'blue' : 'red', fontWeight: 'bold' }}>
                     {ehTracao ? 'Tração' : 'Compressão'}
                   </td>
+                  <td>{formatScientific(esforco.tensao)}</td>
+                  <td>{formatScientific(esforco.deformacao)}</td>
                 </tr>
               );
             })}
